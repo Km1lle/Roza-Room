@@ -1,0 +1,17 @@
+{%- comment -%}
+  Bandeau de titre art déco : quadrillage, rayons, coins en double trait
+  et filet de cotation, repris du logo. Remplace le hero du thème.
+{%- endcomment -%}
+<section class="hero hero-deco {{ page.hero_height | default: 'is-medium' }}">
+    <span class="deco-coin deco-coin--hg" aria-hidden="true"></span>
+    <span class="deco-coin deco-coin--hd" aria-hidden="true"></span>
+    <span class="deco-coin deco-coin--bg" aria-hidden="true"></span>
+    <span class="deco-coin deco-coin--bd" aria-hidden="true"></span>
+    <div class="hero-body">
+        <div class="container">
+            <h1 class="title">{{ page.title }}</h1>
+            <div class="deco-cote" aria-hidden="true"><span></span></div>
+            {% if page.subtitle %}<p class="subtitle">{{ page.subtitle }}</p>{% endif %}
+        </div>
+    </div>
+</section>

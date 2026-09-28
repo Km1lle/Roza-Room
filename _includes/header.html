@@ -1,11 +1,12 @@
 <nav
-    class="navbar is-dark {% if site.fixed_navbar %} is-fixed-{{ site.fixed_navbar }} {% endif %}"
+    class="navbar {% if site.fixed_navbar %} is-fixed-{{ site.fixed_navbar }} {% endif %}"
     x-data="{ openNav: false }"
 >
     <div class="container">
         <div class="navbar-brand">
-            <a href="{{ '/' | relative_url }}" class="navbar-item has-text-weight-bold">
-                {{ site.title }}
+            <a href="{{ '/' | relative_url }}" class="navbar-item navbar-logo">
+                <img src="{{ '/assets/img/logo.svg' | relative_url }}" alt="" width="40" height="40">
+                <span>{{ site.title }}</span>
             </a>
             <a
                 role="button"

@@ -2,100 +2,390 @@
 ---
 
 // ─── Palette ──────────────────────────────────────────────────────────────
-// Bleu nuit : navbar, texte          Bleu-vert : couleur principale, liens
-// Orange : accents (jamais en texte sur fond blanc, contraste insuffisant)
-// Crème : fonds doux                  Brun : survol des liens, dates, danger
-$nuit: #001724;
-$sarcelle: #15676D;
-$creme: #FFEBD1;
-$orange: #FF7A00;
-$brique: #79280E;
+// Couleurs du logo :
+$nuit: #0A2A2A;         // navbar, hero, pied de page, texte
+$vert: #1F7A66;         // liens, quadrillage
+$or: #D9B15C;           // ornements, filets
+$or-clair: #E9C56C;     // accents sur fond sombre
+// Dérivées :
+$vert-profond: #103B36; // blocs de code
+$creme: #F4E8CF;        // texte sur fond sombre
+$papier: #FAF4E6;       // fond de page
+$carte: #FFFCF5;        // fond des cartes
+$bronze: #7D5E1C;       // or lisible sur fond clair (petits textes dorés)
+
+$titres: "Josefin Sans", "Montserrat", sans-serif;
 
 // Variables Bulma, lues par le thème
-$primary: $sarcelle;
-$link: $sarcelle;
-$info: $sarcelle;
-$warning: $orange;
-$danger: $brique;
+$primary: $nuit;
+$link: $vert;
+$info: $vert;
+$success: $vert;
+$warning: $or-clair;
 $dark: $nuit;
 $text: $nuit;
 $text-strong: $nuit;
-$footer-background-color: $creme;
 
 // Import du thème (ne jamais modifier le gem lui-même, tout surcharger ici)
 @import "main";
 
+// ─── Motifs ───────────────────────────────────────────────────────────────
+@mixin quadrillage($couleur, $alpha, $pas: 32px) {
+    background-image:
+        linear-gradient(rgba($couleur, $alpha) 1px, transparent 1px),
+        linear-gradient(90deg, rgba($couleur, $alpha) 1px, transparent 1px);
+    background-size: $pas $pas;
+}
+
+// Coins en double trait, comme ceux du logo
+@mixin coins($couleur, $taille: 14px, $trait: 2px) {
+    position: relative;
+
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+        width: $taille;
+        height: $taille;
+        pointer-events: none;
+        transition: width 0.2s ease, height 0.2s ease;
+    }
+
+    &::before {
+        top: 6px;
+        left: 6px;
+        border-top: $trait solid $couleur;
+        border-left: $trait solid $couleur;
+    }
+
+    &::after {
+        right: 6px;
+        bottom: 6px;
+        border-right: $trait solid $couleur;
+        border-bottom: $trait solid $couleur;
+    }
+}
+
+// ─── Base ─────────────────────────────────────────────────────────────────
+html,
+body {
+    background-color: $papier;
+}
+
+body {
+    @include quadrillage($vert, 0.06);
+    color: $nuit;
+}
+
+.title,
+.content h1,
+.content h2,
+.content h3,
+.content h4,
+.menu-label,
+.navbar-item,
+.button,
+.message-header {
+    font-family: $titres;
+}
+
+.title,
+.content h1,
+.content h2,
+.content h3,
+.content h4 {
+    color: $nuit;
+    letter-spacing: 0.02em;
+}
+
+.has-text-grey {
+    color: rgba($nuit, 0.7) !important;
+}
+
+input[type="checkbox"] {
+    accent-color: $vert;
+}
+
 // ─── Navigation ───────────────────────────────────────────────────────────
-.navbar.is-dark {
-    border-bottom: 3px solid $orange;
+.navbar {
+    background-color: $nuit;
+    border-bottom: 4px double $or;
+
+    .navbar-item,
+    .navbar-link {
+        color: $creme;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-size: 0.9rem;
+    }
 
     .navbar-item:hover,
+    .navbar-item:focus,
     .navbar-item.is-active {
         background-color: transparent;
-        color: $orange;
+        color: $or-clair;
+    }
+
+    .navbar-logo {
+        gap: 0.75rem;
+        font-weight: 700;
+        font-size: 1.05rem;
+        color: $or-clair;
+
+        img {
+            max-height: 2.5rem;
+        }
+    }
+
+    .navbar-burger {
+        color: $creme;
+    }
+}
+
+.navbar-menu.is-active {
+    background-color: $nuit;
+}
+
+// ─── Hero (bandeau de titre) ──────────────────────────────────────────────
+.hero-deco {
+    position: relative;
+    overflow: hidden;
+    background-color: $nuit;
+    background-image:
+        repeating-conic-gradient(from 0deg at 88% 50%, rgba($or, 0.09) 0deg 1.5deg, transparent 1.5deg 10deg),
+        linear-gradient(rgba($vert, 0.35) 1px, transparent 1px),
+        linear-gradient(90deg, rgba($vert, 0.35) 1px, transparent 1px);
+    background-size: auto, 32px 32px, 32px 32px;
+    border-bottom: 4px double $or;
+
+    .title {
+        color: $creme;
+        font-size: 2.5rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-bottom: 0;
+    }
+
+    .subtitle {
+        color: $or;
+        font-size: 1.35rem;
+        margin-top: 0.5rem;
+    }
+
+    &.is-small .title {
+        font-size: 2rem;
+    }
+}
+
+.deco-coin {
+    position: absolute;
+    width: 36px;
+    height: 36px;
+    border: 0 double $or;
+
+    &--hg { top: 14px; left: 14px; border-top-width: 5px; border-left-width: 5px; }
+    &--hd { top: 14px; right: 14px; border-top-width: 5px; border-right-width: 5px; }
+    &--bg { bottom: 14px; left: 14px; border-bottom-width: 5px; border-left-width: 5px; }
+    &--bd { bottom: 14px; right: 14px; border-bottom-width: 5px; border-right-width: 5px; }
+
+    // Sur mobile, les coins chevaucheraient le titre
+    @media screen and (max-width: 768px) {
+        display: none;
+    }
+}
+
+// Filet de cotation sous le titre : traits d'extrémité, ligne et losange central
+.deco-cote {
+    position: relative;
+    width: 200px;
+    height: 14px;
+    margin-top: 0.6rem;
+    border-left: 2px solid $or;
+    border-right: 2px solid $or;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 6px;
+        left: 6px;
+        right: 6px;
+        height: 2px;
+        background-color: $or;
+    }
+
+    span {
+        position: absolute;
+        top: 3px;
+        left: calc(50% - 4px);
+        width: 8px;
+        height: 8px;
+        background-color: $or-clair;
+        transform: rotate(45deg);
     }
 }
 
 // ─── Liens et titres ──────────────────────────────────────────────────────
 main a:not(.button):not(.card):not(.box):not(.tag):hover {
-    color: $brique;
+    color: $bronze;
 }
 
 .content h2 {
     padding-bottom: 0.3em;
-    border-bottom: 2px solid $creme;
+    border-bottom: 1px solid rgba($or, 0.6);
 }
 
 h2.title {
     display: inline-block;
-    padding-bottom: 0.2em;
-    border-bottom: 3px solid $orange;
+    padding-bottom: 0.25em;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-bottom: 4px double $or;
+}
+
+.breadcrumb {
+    font-family: $titres;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.85rem;
+
+    li.is-active a {
+        color: rgba($nuit, 0.6);
+    }
+}
+
+// ─── Code ─────────────────────────────────────────────────────────────────
+.content pre,
+.highlight pre,
+.highlight {
+    background-color: $vert-profond;
+    color: $creme;
+}
+
+.content :not(pre) > code {
+    background-color: rgba($vert, 0.1);
+    color: $nuit;
+}
+
+// Coloration syntaxique (Rouge) sur fond sombre
+$vert-clair: mix($vert, $creme, 35%);
+
+.highlight {
+    .c, .c1, .cm, .cs { color: rgba($creme, 0.5); font-style: italic; }
+    .cp, .cpf { color: $or; }
+    .k, .kd, .kt, .kr, .kc, .kn, .kp, .ow { color: $or-clair; }
+    .s, .s1, .s2, .sb, .sc, .sd, .se, .sh, .si, .sx, .sr, .ss { color: $vert-clair; }
+    .m, .mi, .mf, .mh, .mo, .il { color: $vert-clair; }
+    .nf, .fm, .nb, .bp, .nc, .nn { color: $or; }
+    .n, .nx, .nv, .na, .no, .o, .p { color: $creme; }
+    .err { color: $creme; background-color: transparent; }
 }
 
 // ─── Cartes et encadrés ───────────────────────────────────────────────────
+.card,
+.box,
+.contents {
+    @include coins($or);
+    background-color: $carte;
+    color: $nuit;
+    border: 1px solid rgba($or, 0.55);
+    border-radius: 2px;
+    box-shadow: none;
+}
+
+// Sommaire : le thème l'enveloppe dans .contents, qui porte le style de carte
+.contents {
+    padding: 1.5rem;
+
+    .menu,
+    .menu-list,
+    .menu-list li,
+    .menu-list a:not(:hover) {
+        background-color: transparent;
+    }
+}
+
+.box .title,
+.card .title {
+    color: $nuit;
+}
+
+.box .icon {
+    color: $bronze;
+}
+
 .doc-card {
     display: block;
     height: 100%;
-    border-top: 3px solid transparent;
-    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
 
     &:hover {
         transform: translateY(-2px);
-        border-top-color: $orange;
-        box-shadow: 0 0.5em 1em -0.125em rgba($nuit, 0.15);
+        border-color: $or;
+        box-shadow: 0 6px 16px -8px rgba($nuit, 0.35);
+
+        &::before,
+        &::after {
+            width: 24px;
+            height: 24px;
+        }
     }
 }
 
 .doc-meta {
-    background-color: $creme;
-    border-left: 4px solid $orange;
-    box-shadow: none;
+    background-color: rgba($or, 0.12);
+    border-left: 4px double $or;
 }
 
-.tag.is-light:not(.is-info):not(.is-warning):not(.is-success):not(.is-primary):not(.is-link) {
-    background-color: $creme;
-    color: $brique;
-}
+.tag.is-light {
+    background-color: rgba($or, 0.2);
+    color: $bronze;
+    border-radius: 2px;
 
-.doc-pager .button {
-    background-color: $creme;
-    color: $brique;
+    &.is-info,
+    &.is-success {
+        background-color: rgba($vert, 0.12);
+        color: $vert;
+    }
 
-    &:hover {
-        background-color: $orange;
+    &.is-warning {
+        background-color: rgba($or-clair, 0.3);
         color: $nuit;
     }
 }
 
-// ─── Sommaire latéral ─────────────────────────────────────────────────────
-.menu-label {
-    color: $sarcelle;
-    font-weight: 600;
+.doc-pager .button {
+    background-color: $carte;
+    border: 1px solid $or;
+    border-radius: 2px;
+    color: $vert;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.85rem;
+
+    &:hover {
+        background-color: $nuit;
+        color: $or-clair;
+    }
 }
 
-.menu-list a:hover {
-    background-color: $creme;
-    color: $brique;
+.message {
+    border-radius: 2px;
+}
+
+// ─── Sommaire latéral ─────────────────────────────────────────────────────
+.menu-label {
+    color: $bronze;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+}
+
+.menu-list a {
+    color: $nuit;
+
+    &:hover {
+        background-color: rgba($or, 0.15);
+        color: $nuit;
+    }
 }
 
 // ─── Journal ──────────────────────────────────────────────────────────────
@@ -104,24 +394,41 @@ h2.title {
     margin-left: 0;
 
     li {
-        padding: 0.4rem 0;
-        border-bottom: 1px solid rgba($nuit, 0.1);
+        padding: 0.5rem 0;
+        border-bottom: 1px solid rgba($or, 0.4);
     }
 
     span {
         display: inline-block;
         min-width: 6.5rem;
-        color: $brique !important;
+        font-family: $titres;
+        color: $bronze !important;
     }
 }
 
 // ─── Pied de page ─────────────────────────────────────────────────────────
 .footer {
-    color: $nuit;
-    border-top: 3px solid $orange;
+    @include quadrillage($vert, 0.3);
+    background-color: $nuit;
+    color: $creme;
+    border-top: 4px double $or;
 
     a {
-        color: $brique;
+        color: $or-clair;
+        font-family: $titres;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+    }
+
+    .content.is-small a {
+        text-transform: none;
+        letter-spacing: normal;
+        font-family: inherit;
+    }
+
+    .footer-logo {
+        display: block;
+        margin: 0 auto 1.25rem;
     }
 }
 

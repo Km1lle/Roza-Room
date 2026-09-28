@@ -36,6 +36,9 @@ Modèles complets dans `_templates/` (dossier non publié). Points importants :
 ## Thème
 
 - Ne jamais modifier le gem ; surcharger dans `_layouts/`, `_includes/` et `assets/css/app.scss`.
-- Palette (variables en tête de `app.scss`, thème clair forcé) : blanc, `$nuit` #001724 (navbar, texte), `$sarcelle` #15676D (principale, liens), `$creme` #FFEBD1 (fonds doux), `$orange` #FF7A00 (accents, jamais en texte sur blanc), `$brique` #79280E (survol, dates, danger). Les couleurs Mermaid sont dans `footer-scripts.html`.
-- Surcharges existantes : `header.html`, `footer.html`, `pagination.html` (traduction), `footer-scripts.html` (Mermaid), layout `post`.
+- Style « plan technique art déco », repris du logo : page claire sur papier quadrillé, bandes sombres (navbar, hero, pied de page) avec quadrillage, rayons et coins en double trait dorés. Titres en Josefin Sans (chargée dans `head-scripts.html`).
+- Palette (variables en tête de `app.scss`, `force_theme: light`). Couleurs du logo : `$nuit` #0A2A2A (bandes sombres, texte), `$vert` #1F7A66 (liens, quadrillage), `$or` #D9B15C (ornements, filets), `$or-clair` #E9C56C (accents sur fond sombre). Dérivées : `$papier` #FAF4E6 (fond), `$carte` #FFFCF5, `$creme` #F4E8CF (texte sur sombre), `$vert-profond` #103B36 (code), `$bronze` #7D5E1C (petit texte doré sur fond clair : l'or du logo n'y est pas lisible).
+- Ornements : mixins `quadrillage()` et `coins()` dans `app.scss` ; bandeau dans `_includes/hero.html` (surcharge du thème). Coloration du code dans `app.scss` ; couleurs Mermaid dans `footer-scripts.html`.
+- Logo : `assets/img/logo.svg`, affiché dans la navbar et le pied de page ; `assets/img/favicon.png` (icône d'onglet, déclarée par `favicon:` dans `_config.yml`).
+- Surcharges existantes : `header.html` (logo), `footer.html`, `hero.html` (bandeau art déco), `head-scripts.html` (police), `pagination.html` (traduction), `footer-scripts.html` (Mermaid), layout `post`.
 - Includes maison : `cards.html` (grille de cartes), `status.html`, `message.html`, `project-context.html`.

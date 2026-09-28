@@ -1,15 +1,16 @@
 <footer class="footer">
-    <div class="container">
+    <div class="container has-text-centered">
+        <img class="footer-logo" src="{{ '/assets/img/logo.svg' | relative_url }}" alt="" width="56" height="56">
         {% if site.footer_menu %}
             <div class="columns is-multiline is-centered">
                 {% for item in site.data[site.footer_menu] %}
-                    <div class="column is-narrow has-text-centered">
+                    <div class="column is-narrow">
                         <a href="{{ item.link | relative_url }}" class="link">{{ item.name }}</a>
                     </div>
                 {% endfor %}
             </div>
         {% endif %}
-        <div class="content is-small has-text-centered">
+        <div class="content is-small">
             <p>
                 {{ site.title }} · {{ 'now' | date: '%Y' }} · Thème
                 <a href="https://github.com/chrisrhymes/bulma-clean-theme">Bulma Clean Theme</a>
