@@ -1,0 +1,40 @@
+# Roza-Room
+
+Documentation et journal de bord de mes projets personnels. Site [Jekyll](https://jekyllrb.com) avec le thème [Bulma Clean Theme](https://github.com/chrisrhymes/bulma-clean-theme), structure inspirée de [doc.makerspace-amiens.fr](https://github.com/Makerspace-Amiens/doc.makerspace-amiens.fr).
+
+## Lancer le site en local
+
+Prérequis : Ruby 3.x avec le DevKit ([RubyInstaller](https://rubyinstaller.org) sous Windows).
+
+```bash
+bundle install
+bundle exec jekyll serve --livereload
+```
+
+Le site est alors disponible sur <http://localhost:4000>.
+
+## Organisation
+
+| Dossier | Contenu | URL |
+| --- | --- | --- |
+| `_projects/<slug>/` | Un dossier par projet : `index.md` + une page par section | `/projects/<slug>/` |
+| `_docs/tutorials/` | Tutoriels pas à pas | `/docs/tutorials/...` |
+| `_docs/how-to-guides/` | Guides pour une tâche précise | `/docs/how-to-guides/...` |
+| `_docs/concepts/` | Théorie, principes | `/docs/concepts/...` |
+| `_docs/references/` | Fiches composants, machines, logiciels | `/docs/references/...` |
+| `_posts/` | Journal de bord (`AAAA-MM-JJ-titre.md`) | `/journal/...` |
+| `_templates/` | Modèles vierges à copier (non publiés) | |
+
+## Ajouter du contenu
+
+- **Nouveau projet** : créer `_projects/<slug>/index.md` à partir de `_templates/projet-index.md`.
+- **Nouvelle section de projet** : créer `_projects/<slug>/<section>.md` à partir de `_templates/projet-section.md`.
+- **Nouvelle page de doc** : créer le fichier dans le bon sous-dossier de `_docs/` à partir de `_templates/doc.md`.
+- **Nouvelle entrée de journal** : créer `_posts/AAAA-MM-JJ-titre.md` à partir de `_templates/journal.md`.
+
+Les listes (projets, sections, documentation, journal) se mettent à jour toutes seules.
+
+## Mise en ligne
+
+Le workflow `.github/workflows/pages.yml` publie le site sur GitHub Pages à chaque push sur `main`.
+Dans les paramètres du dépôt GitHub : **Settings > Pages > Source : GitHub Actions**.

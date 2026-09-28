@@ -1,0 +1,78 @@
+title: Roza-Room
+description: Documentation et journal de bord de mes projets personnels
+theme: bulma-clean-theme
+lang: fr
+
+# À renseigner au moment de la mise en ligne (ex. https://<utilisateur>.github.io)
+url: ""
+baseurl: ""
+
+permalink: pretty
+fixed_navbar: top
+theme_color: "#001724"
+force_theme: light
+footer_menu: footer_navigation
+hide_share_buttons: true
+
+# Journal de bord
+paginate: 10
+paginate_path: "/journal/page:num/"
+excerpt_separator: "<!--more-->"
+
+plugins:
+  - jekyll-paginate
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+collections:
+  projects:
+    output: true
+    permalink: /projects/:path/
+  docs:
+    output: true
+    permalink: /docs/:path/
+
+defaults:
+  - scope:
+      path: ""
+      type: projects
+    values:
+      layout: documentation
+      hero_height: is-small
+      menubar_toc: true
+      toc_title: Sommaire
+  # Page d'accueil d'un projet : _projects/<slug>/index.md
+  - scope:
+      path: "_projects/*/index.md"
+    values:
+      layout: project
+      menubar_toc: false
+  - scope:
+      path: ""
+      type: docs
+    values:
+      layout: documentation
+      hero_height: is-small
+      menubar_toc: true
+      toc_title: Sommaire
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+      hero_height: is-small
+      permalink: /journal/:year/:month/:day/:title/
+
+sass:
+  silence_deprecations:
+    - import
+    - if-function
+    - global-builtin
+
+exclude:
+  - README.md
+  - CLAUDE.md
+  - Gemfile
+  - Gemfile.lock
+  - vendor/

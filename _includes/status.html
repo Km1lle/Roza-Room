@@ -1,0 +1,9 @@
+{%- comment -%} Pastille d'état d'un projet : idée | en cours | en pause | terminé {%- endcomment -%}
+{%- case include.status -%}
+  {%- when "idée" -%}{%- assign _cls = "is-info is-light" -%}
+  {%- when "en cours" -%}{%- assign _cls = "is-warning is-light" -%}
+  {%- when "en pause" -%}{%- assign _cls = "is-light" -%}
+  {%- when "terminé" -%}{%- assign _cls = "is-success is-light" -%}
+  {%- else -%}{%- assign _cls = "is-light" -%}
+{%- endcase -%}
+<span class="tag {{ _cls }}">{{ include.status }}</span>

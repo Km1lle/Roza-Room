@@ -1,0 +1,131 @@
+---
+---
+
+// ─── Palette ──────────────────────────────────────────────────────────────
+// Bleu nuit : navbar, texte          Bleu-vert : couleur principale, liens
+// Orange : accents (jamais en texte sur fond blanc, contraste insuffisant)
+// Crème : fonds doux                  Brun : survol des liens, dates, danger
+$nuit: #001724;
+$sarcelle: #15676D;
+$creme: #FFEBD1;
+$orange: #FF7A00;
+$brique: #79280E;
+
+// Variables Bulma, lues par le thème
+$primary: $sarcelle;
+$link: $sarcelle;
+$info: $sarcelle;
+$warning: $orange;
+$danger: $brique;
+$dark: $nuit;
+$text: $nuit;
+$text-strong: $nuit;
+$footer-background-color: $creme;
+
+// Import du thème (ne jamais modifier le gem lui-même, tout surcharger ici)
+@import "main";
+
+// ─── Navigation ───────────────────────────────────────────────────────────
+.navbar.is-dark {
+    border-bottom: 3px solid $orange;
+
+    .navbar-item:hover,
+    .navbar-item.is-active {
+        background-color: transparent;
+        color: $orange;
+    }
+}
+
+// ─── Liens et titres ──────────────────────────────────────────────────────
+main a:not(.button):not(.card):not(.box):not(.tag):hover {
+    color: $brique;
+}
+
+.content h2 {
+    padding-bottom: 0.3em;
+    border-bottom: 2px solid $creme;
+}
+
+h2.title {
+    display: inline-block;
+    padding-bottom: 0.2em;
+    border-bottom: 3px solid $orange;
+}
+
+// ─── Cartes et encadrés ───────────────────────────────────────────────────
+.doc-card {
+    display: block;
+    height: 100%;
+    border-top: 3px solid transparent;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+
+    &:hover {
+        transform: translateY(-2px);
+        border-top-color: $orange;
+        box-shadow: 0 0.5em 1em -0.125em rgba($nuit, 0.15);
+    }
+}
+
+.doc-meta {
+    background-color: $creme;
+    border-left: 4px solid $orange;
+    box-shadow: none;
+}
+
+.tag.is-light:not(.is-info):not(.is-warning):not(.is-success):not(.is-primary):not(.is-link) {
+    background-color: $creme;
+    color: $brique;
+}
+
+.doc-pager .button {
+    background-color: $creme;
+    color: $brique;
+
+    &:hover {
+        background-color: $orange;
+        color: $nuit;
+    }
+}
+
+// ─── Sommaire latéral ─────────────────────────────────────────────────────
+.menu-label {
+    color: $sarcelle;
+    font-weight: 600;
+}
+
+.menu-list a:hover {
+    background-color: $creme;
+    color: $brique;
+}
+
+// ─── Journal ──────────────────────────────────────────────────────────────
+.journal-list {
+    list-style: none;
+    margin-left: 0;
+
+    li {
+        padding: 0.4rem 0;
+        border-bottom: 1px solid rgba($nuit, 0.1);
+    }
+
+    span {
+        display: inline-block;
+        min-width: 6.5rem;
+        color: $brique !important;
+    }
+}
+
+// ─── Pied de page ─────────────────────────────────────────────────────────
+.footer {
+    color: $nuit;
+    border-top: 3px solid $orange;
+
+    a {
+        color: $brique;
+    }
+}
+
+.mermaid {
+    margin: 1.5rem 0;
+    text-align: center;
+}

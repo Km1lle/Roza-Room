@@ -1,0 +1,39 @@
+---
+layout: default
+---
+{%- if page.project -%}
+    {%- assign _project_dir = "_projects/" | append: page.project | append: "/" -%}
+    {%- assign _project_index = site.projects | where_exp: "p", "p.path contains _project_dir" | where: "layout", "project" | first -%}
+{%- endif -%}
+
+<nav class="breadcrumb" aria-label="Fil d'Ariane">
+    <ul>
+        <li><a href="{{ '/journal/' | relative_url }}">Journal</a></li>
+        <li class="is-active"><a aria-current="page">{{ page.title }}</a></li>
+    </ul>
+</nav>
+
+<div class="tags">
+    <span class="tag is-primary is-light">{{ page.date | date: "%d/%m/%Y" }}</span>
+    {% if _project_index %}
+        <a class="tag is-link is-light" href="{{ _project_index.url | relative_url }}">{{ _project_index.title }}</a>
+    {% endif %}
+    {% for tag in page.tags %}<span class="tag is-light">{{ tag }}</span>{% endfor %}
+</div>
+
+<div class="content">
+    {{ content }}
+</div>
+
+<nav class="level mt-6 doc-pager">
+    <div class="level-left">
+        {% if page.previous %}
+            <a class="button is-light" href="{{ page.previous.url | relative_url }}">← {{ page.previous.title }}</a>
+        {% endif %}
+    </div>
+    <div class="level-right">
+        {% if page.next %}
+            <a class="button is-light" href="{{ page.next.url | relative_url }}">{{ page.next.title }} →</a>
+        {% endif %}
+    </div>
+</nav>

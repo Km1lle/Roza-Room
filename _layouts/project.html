@@ -1,0 +1,64 @@
+---
+layout: default
+---
+{%- include project-context.html page=page -%}
+{%- assign _posts = site.posts | where: "project", _project_slug -%}
+
+<nav class="breadcrumb" aria-label="Fil d'Ariane">
+    <ul>
+        <li><a href="{{ '/projects/' | relative_url }}">Projets</a></li>
+        <li class="is-active"><a aria-current="page">{{ page.title }}</a></li>
+    </ul>
+</nav>
+
+<div class="columns">
+    <div class="column is-8">
+        <div class="content">
+            {% if page.description %}<p class="is-size-5">{{ page.description }}</p>{% endif %}
+            {{ content }}
+        </div>
+    </div>
+    <div class="column is-4">
+        <div class="box">
+            {% if page.status %}<p class="mb-2"><strong>État :</strong> {% include status.html status=page.status %}</p>{% endif %}
+            {% if page.started %}<p class="mb-2"><strong>Démarré :</strong> {{ page.started }}</p>{% endif %}
+            {% if page.repository %}<p class="mb-2"><strong>Code :</strong> <a href="{{ page.repository }}">dépôt</a></p>{% endif %}
+            {% if page.tags.size > 0 %}
+            <div class="tags mt-3">{% for tag in page.tags %}<span class="tag is-light">{{ tag }}</span>{% endfor %}</div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<section class="mt-6">
+    <h2 class="title is-4">Documentation du projet</h2>
+    {% include cards.html items=_project_pages empty="Aucune section pour l'instant." %}
+</section>
+
+{%- assign _linked_docs = "" | split: "" -%}
+{%- for url in page.docs -%}
+    {%- assign _found = site.docs | where: "url", url | first -%}
+    {%- if _found -%}{%- assign _linked_docs = _linked_docs | push: _found -%}{%- endif -%}
+{%- endfor -%}
+{% if _linked_docs.size > 0 %}
+<section class="mt-6">
+    <h2 class="title is-4">Documentation utilisée</h2>
+    {% include cards.html items=_linked_docs %}
+</section>
+{% endif %}
+
+<section class="mt-6">
+    <h2 class="title is-4">Journal de bord</h2>
+    {% if _posts.size > 0 %}
+    <ul class="journal-list">
+        {% for post in _posts %}
+        <li>
+            <span class="has-text-grey">{{ post.date | date: "%d/%m/%Y" }}</span>
+            <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p class="has-text-grey">Aucune entrée pour l'instant.</p>
+    {% endif %}
+</section>

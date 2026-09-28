@@ -1,0 +1,13 @@
+{%- comment -%}
+  Encadré d'information.
+
+  {% include message.html status="is-warning" title="Attention" message="Texte en **Markdown**." %}
+
+  status : is-info (défaut) | is-success | is-warning | is-danger
+{%- endcomment -%}
+<article class="message {{ include.status | default: 'is-info' }}">
+    {%- if include.title -%}
+    <div class="message-header"><p>{{ include.title }}</p></div>
+    {%- endif -%}
+    <div class="message-body content">{{ include.message | markdownify }}</div>
+</article>

@@ -1,0 +1,6 @@
+- name: À propos
+  link: /about/
+- name: Flux RSS du journal
+  link: /feed.xml
+# - name: Sources
+#   link: https://github.com/<utilisateur>/mon-site

@@ -1,0 +1,57 @@
+---
+layout: default
+---
+{%- if page.collection == "projects" -%}
+    {%- include project-context.html page=page -%}
+{%- endif -%}
+
+<nav class="breadcrumb" aria-label="Fil d'Ariane">
+    <ul>
+        {% if page.collection == "projects" %}
+            <li><a href="{{ '/projects/' | relative_url }}">Projets</a></li>
+            {% if _project_index %}<li><a href="{{ _project_index.url | relative_url }}">{{ _project_index.title }}</a></li>{% endif %}
+        {% else %}
+            <li><a href="{{ '/docs/' | relative_url }}">Documentation</a></li>
+        {% endif %}
+        <li class="is-active"><a aria-current="page">{{ page.title }}</a></li>
+    </ul>
+</nav>
+
+{% if page.description or page.difficulty or page.time or page.tags.size > 0 %}
+<div class="box doc-meta">
+    {% if page.description %}<p class="mb-2">{{ page.description }}</p>{% endif %}
+    <div class="tags">
+        {% if page.difficulty %}<span class="tag is-info is-light">Difficulté : {{ page.difficulty }}/5</span>{% endif %}
+        {% if page.time %}<span class="tag is-info is-light">Durée : {{ page.time }} h</span>{% endif %}
+        {% for tag in page.tags %}<span class="tag is-light">{{ tag }}</span>{% endfor %}
+    </div>
+</div>
+{% endif %}
+
+<div class="content">
+    {{ content }}
+</div>
+
+{%- if page.collection == "projects" -%}
+    {%- for p in _project_pages -%}
+        {%- if p.url == page.url -%}
+            {%- assign _i = forloop.index0 -%}
+        {%- endif -%}
+    {%- endfor -%}
+    {%- assign _prev_i = _i | minus: 1 -%}
+    {%- assign _next_i = _i | plus: 1 -%}
+    <nav class="level mt-6 doc-pager">
+        <div class="level-left">
+            {% if _i > 0 %}
+                {%- assign _prev = _project_pages[_prev_i] -%}
+                <a class="button is-light" href="{{ _prev.url | relative_url }}">← {{ _prev.title }}</a>
+            {% endif %}
+        </div>
+        <div class="level-right">
+            {% if _next_i < _project_pages.size %}
+                {%- assign _next = _project_pages[_next_i] -%}
+                <a class="button is-light" href="{{ _next.url | relative_url }}">{{ _next.title }} →</a>
+            {% endif %}
+        </div>
+    </nav>
+{%- endif -%}

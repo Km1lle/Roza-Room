@@ -1,2 +1,12 @@
-.venv/
-site/
+# Jekyll
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+
+# Bundler
+Gemfile.lock
+.bundle/
+vendor/
+
+.DS_Store

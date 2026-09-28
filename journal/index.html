@@ -1,0 +1,10 @@
+---
+layout: default
+title: Journal de bord
+subtitle: Les avancées de tous mes projets, de la plus récente à la plus ancienne
+hero_height: is-small
+---
+
+{% include cards.html items=paginator.posts empty="Aucune entrée pour l'instant." %}
+
+{% include pagination.html %}

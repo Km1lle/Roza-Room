@@ -1,0 +1,19 @@
+<footer class="footer">
+    <div class="container">
+        {% if site.footer_menu %}
+            <div class="columns is-multiline is-centered">
+                {% for item in site.data[site.footer_menu] %}
+                    <div class="column is-narrow has-text-centered">
+                        <a href="{{ item.link | relative_url }}" class="link">{{ item.name }}</a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <div class="content is-small has-text-centered">
+            <p>
+                {{ site.title }} · {{ 'now' | date: '%Y' }} · Thème
+                <a href="https://github.com/chrisrhymes/bulma-clean-theme">Bulma Clean Theme</a>
+            </p>
+        </div>
+    </div>
+</footer>

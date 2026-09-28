@@ -1,0 +1,8 @@
+- name: Projets
+  link: /projects/
+- name: Documentation
+  link: /docs/
+- name: Journal
+  link: /journal/
+- name: À propos
+  link: /about/

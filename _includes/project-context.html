@@ -1,0 +1,13 @@
+{%- comment -%}
+  Retrouve le projet d'une page de la collection `projects` à partir de son dossier.
+  Variables définies :
+    _project_slug   nom du dossier (ex. "exemple")
+    _project_index  la page d'accueil du projet (index.md)
+    _project_pages  les autres pages du projet, triées par `order`
+{%- endcomment -%}
+{%- assign _parts = include.page.path | split: "/" -%}
+{%- assign _project_slug = _parts[1] -%}
+{%- assign _project_dir = "_projects/" | append: _project_slug | append: "/" -%}
+{%- assign _project_all = site.projects | where_exp: "p", "p.path contains _project_dir" -%}
+{%- assign _project_index = _project_all | where: "layout", "project" | first -%}
+{%- assign _project_pages = _project_all | where_exp: "p", "p.layout != 'project'" | sort: "order", "last" -%}
