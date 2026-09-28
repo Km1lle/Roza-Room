@@ -1,0 +1,18 @@
+site_name: Roza-Room
+theme:
+  name: material
+  language: fr
+  features:
+    - navigation.instant
+    - navigation.tabs
+    - search.highlight
+    - content.code.copy
+  palette:
+    - scheme: default
+      toggle:
+        icon: material/weather-night
+        name: Mode sombre
+    - scheme: slate
+      toggle:
+        icon: material/weather-sunny
+        name: Mode clair
