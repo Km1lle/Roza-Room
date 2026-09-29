@@ -4,12 +4,14 @@ Documentation et journal de bord de mes projets personnels. Site [Jekyll](https:
 
 ## Lancer le site en local
 
-Prérequis : Ruby 3.x avec le DevKit ([RubyInstaller](https://rubyinstaller.org) sous Windows).
+Prérequis : Ruby 3.x avec le DevKit ([RubyInstaller](https://rubyinstaller.org) sous Windows) et `make` (sous Windows : `winget install ezwinports.make`).
 
 ```bash
-bundle install
-bundle exec jekyll serve --livereload
+make install   # une fois : installe les dépendances
+make serve     # lance le site avec rechargement automatique
 ```
+
+Autres commandes : `make build` (construit le site dans `_site/`), `make clean` (supprime le site généré et les caches).
 
 Le site est alors disponible sur <http://localhost:4000>.
 

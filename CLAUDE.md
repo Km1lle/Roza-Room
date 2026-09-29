@@ -1,7 +1,7 @@
 # CLAUDE.md
 
 Site **Jekyll**, thème `bulma-clean-theme 1.3.1`, contenu en **français**, rédigé en Markdown.
-Lancer en local : `bundle exec jekyll serve --livereload` (<http://localhost:4000>).
+Lancer en local : `make serve` (<http://localhost:4000>). Autres cibles du `Makefile` : `make build`, `make install`, `make clean`.
 
 ## Structure
 
