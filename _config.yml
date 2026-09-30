@@ -3,8 +3,8 @@ description: Documentation et journal de bord de mes projets personnels
 theme: bulma-clean-theme
 lang: fr
 
-# À renseigner au moment de la mise en ligne (ex. https://<utilisateur>.github.io)
-url: ""
+# Adresse du site en ligne ; baseurl (/Roza-Room) est fourni par le workflow de déploiement
+url: "https://r0zalynd.github.io"
 baseurl: ""
 
 permalink: pretty

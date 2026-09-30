@@ -16,7 +16,7 @@ hero_height: is-medium
     </div>
     <div class="column is-4">
         <a class="box doc-card" href="{{ '/docs/' | relative_url }}">
-            <p class="title is-5"><span class="icon mr-2"><i class="fas fa-book"></i></span>Documentation</p>
+            <p class="title is-5"><span class="icon mr-2"><i class="fas fa-book"></i></span>Ressources</p>
             <p class="has-text-grey">Tutoriels, guides, concepts et fiches de référence réutilisables.</p>
         </a>
     </div>

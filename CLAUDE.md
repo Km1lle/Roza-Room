@@ -9,18 +9,18 @@ Lancer en local : `make serve` (<http://localhost:4000>). Autres cibles du `Make
 | --- | --- | --- |
 | Accueil d'un projet | `_projects/<slug>/index.md` | `project` (automatique) |
 | Section d'un projet | `_projects/<slug>/<section>.md` | `documentation` (automatique) |
-| Documentation réutilisable | `_docs/<genre>/<page>.md` | `documentation` (automatique) |
+| Ressources (doc réutilisable) | `_docs/<genre>/<page>.md` | `documentation` (automatique) |
 | Journal de bord | `_posts/AAAA-MM-JJ-<titre>.md` | `post` (automatique) |
 
 Les layouts sont attribués par les `defaults` de `_config.yml` : ne pas mettre de `layout:` dans ces fichiers.
 
-Genres de `_docs/` (Diátaxis) : `tutorials/` (pas à pas), `how-to-guides/` (tâche précise), `concepts/` (théorie), `references/` (fiches). Le dossier suffit à classer la page sur `/docs/`, aucun champ `type` n'est nécessaire.
+Catégories de `_docs/` (page Ressources, `/docs/`) : `materiel/` (machines, outils, composants), `logiciels/` (CAO, trancheurs…), `guides/` (tutoriels, méthodes), `references-externes/` (ressources trouvées ailleurs). Le dossier suffit à classer la page, aucun champ `type` n'est nécessaire. Fiches matériel et logiciel : tableau de caractéristiques avec la source, puis une section « Mes notes ».
 
 ## Front matter
 
 Modèles complets dans `_templates/` (dossier non publié). Points importants :
 
-- **Projet** (`index.md`) : `permalink: /projects/<slug>/` obligatoire ; `status` parmi `idée`, `en cours`, `en pause`, `terminé` ; `started: AAAA-MM` sert au tri ; `docs:` liste les URLs de `_docs/` utilisées.
+- **Projet** (`index.md`) : `permalink: /projects/<slug>/` obligatoire ; `seal:` choisit le pictogramme du sceau du projet (fichier `_includes/sceaux/<nom>.html`, sans l'extension ; sans `seal:`, le sceau affiche l'initiale) ; `status` parmi `idée`, `en cours`, `en pause`, `terminé` ; `started: AAAA-MM` sert au tri ; `docs:` liste les URLs de `_docs/` utilisées.
 - **Section de projet** : `order:` fixe l'ordre dans la liste et la navigation précédent/suivant.
 - **Journal** : `project: <slug>` rattache l'entrée au projet (même valeur que le nom du dossier) ; `<!--more-->` sépare le résumé du reste.
 - Une valeur YAML contenant ` : ` doit être entre guillemets.
@@ -41,4 +41,5 @@ Modèles complets dans `_templates/` (dossier non publié). Points importants :
 - Ornements : mixins `quadrillage()` et `coins()` dans `app.scss` ; bandeau dans `_includes/hero.html` (surcharge du thème). Coloration du code dans `app.scss` ; couleurs Mermaid dans `footer-scripts.html`.
 - Logo : `assets/img/logo.svg`, affiché dans la navbar et le pied de page ; `assets/img/favicon.png` (icône d'onglet, déclarée par `favicon:` dans `_config.yml`).
 - Surcharges existantes : `header.html` (logo), `footer.html`, `hero.html` (bandeau art déco), `head.html` (version sur app.css contre le cache), `head-scripts.html` (police), `pagination.html` (traduction), `footer-scripts.html` (Mermaid), layout `post`.
-- Includes maison : `cards.html` (grille de cartes), `status.html`, `message.html`, `project-context.html`.
+- Includes maison : `cards.html` (grille de cartes), `status.html`, `message.html`, `project-context.html`, `project-by-slug.html` (projet d'une entrée du journal), `sceau.html` (sceau de projet).
+- Sceaux de projet : ovale à double contour, pictogramme au trait en `$vert`, affiché sur les cartes (projets et journal), la page du projet et les entrées du journal. Un pictogramme = un fichier `_includes/sceaux/<nom>.html` contenant des formes SVG dans un repère 40 × 40 (trait `currentColor`, pas de couleur en dur) ; la classe `plein` remplit une forme du fond de la carte pour masquer les traits dessinés avant elle. Existants : `plante`, `engrenage`.

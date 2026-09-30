@@ -1,0 +1,9 @@
+{%- comment -%}
+  Retrouve la page d'accueil d'un projet à partir de son slug (nom du dossier).
+  {% include project-by-slug.html slug=post.project %}  →  _found_project
+{%- endcomment -%}
+{%- assign _found_project = nil -%}
+{%- if include.slug -%}
+    {%- assign _slug_dir = "_projects/" | append: include.slug | append: "/" -%}
+    {%- assign _found_project = site.projects | where_exp: "p", "p.path contains _slug_dir" | where: "layout", "project" | first -%}
+{%- endif -%}

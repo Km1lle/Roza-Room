@@ -1,10 +1,8 @@
 ---
 layout: default
 ---
-{%- if page.project -%}
-    {%- assign _project_dir = "_projects/" | append: page.project | append: "/" -%}
-    {%- assign _project_index = site.projects | where_exp: "p", "p.path contains _project_dir" | where: "layout", "project" | first -%}
-{%- endif -%}
+{%- include project-by-slug.html slug=page.project -%}
+{%- assign _project_index = _found_project -%}
 
 <nav class="breadcrumb" aria-label="Fil d'Ariane">
     <ul>
@@ -13,11 +11,15 @@ layout: default
     </ul>
 </nav>
 
+{% if _project_index %}
+<a class="post-projet" href="{{ _project_index.url | relative_url }}">
+    {% include sceau.html project=_project_index %}
+    <span>Projet<br><strong>{{ _project_index.title }}</strong></span>
+</a>
+{% endif %}
+
 <div class="tags">
     <span class="tag is-primary is-light">{{ page.date | date: "%d/%m/%Y" }}</span>
-    {% if _project_index %}
-        <a class="tag is-link is-light" href="{{ _project_index.url | relative_url }}">{{ _project_index.title }}</a>
-    {% endif %}
     {% for tag in page.tags %}<span class="tag is-light">{{ tag }}</span>{% endfor %}
 </div>
 

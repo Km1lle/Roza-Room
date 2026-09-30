@@ -253,6 +253,18 @@ h2.title {
     }
 }
 
+// ─── Images du contenu ────────────────────────────────────────────────────
+// Hauteur limitée pour que les captures CAO ne remplissent pas tout l'écran
+.content img {
+    display: block;
+    max-height: 26rem;
+    width: auto;
+    margin: 1.5rem 0;
+    background-color: #fff;
+    border: 1px solid rgba($or, 0.55);
+    padding: 0.5rem;
+}
+
 // ─── Code ─────────────────────────────────────────────────────────────────
 .content pre,
 .highlight pre,
@@ -327,6 +339,17 @@ $vert-clair: mix($vert, $creme, 35%);
         &::after {
             width: 24px;
             height: 24px;
+        }
+    }
+
+    // Vignette : l'image garde ses proportions dans le cadre 16:9 (sinon Bulma l'étire)
+    .card-image {
+        background-color: #fff;
+        border-bottom: 1px solid rgba($or, 0.55);
+
+        img {
+            object-fit: contain;
+            padding: 0.5rem;
         }
     }
 }
@@ -435,4 +458,90 @@ $vert-clair: mix($vert, $creme, 35%);
 .mermaid {
     margin: 1.5rem 0;
     text-align: center;
+}
+
+// ─── Sceaux de projet ─────────────────────────────────────────────────────
+// Ovale à double contour et pictogramme au trait (_includes/sceau.html)
+.sceau {
+    display: inline-block;
+    width: 3rem;
+    color: $vert;
+    line-height: 0;
+
+    svg {
+        width: 100%;
+        height: auto;
+        overflow: visible;
+    }
+
+    // Fond de l'ovale et formes pleines du pictogramme (masquent les traits derrière elles)
+    .sceau-fond,
+    .plein {
+        fill: $carte;
+    }
+}
+
+// Sur les cartes : apposé en bas à droite, incliné vers la droite
+.card-sceau {
+    position: absolute;
+    right: 1.1rem;
+    bottom: 1.1rem;
+    z-index: 2;
+    width: 3.75rem;
+    transform: rotate(14deg);
+    filter: drop-shadow(0 2px 3px rgba($nuit, 0.25));
+    transition: transform 0.2s ease;
+
+    .doc-card:hover & {
+        transform: rotate(4deg) scale(1.08);
+    }
+}
+
+// Place réservée au sceau : les étiquettes et la date ne passent pas dessous
+.doc-card:has(.card-sceau) .card-content {
+    .tags,
+    > p:last-child {
+        padding-right: 4.5rem;
+    }
+}
+
+// Nom du projet au-dessus du titre d'une entrée du journal
+.card-projet {
+    margin-bottom: 0.35rem;
+    font-family: $titres;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: $vert;
+}
+
+// Dans l'encadré d'informations de la page d'un projet
+.box-sceau {
+    float: right;
+    width: 4rem;
+    margin: -0.25rem 0 0.5rem 1rem;
+}
+
+// En tête d'une entrée du journal : sceau et lien vers le projet
+.post-projet {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    color: $nuit;
+    font-family: $titres;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    line-height: 1.3;
+
+    strong {
+        color: $vert;
+        font-size: 1rem;
+    }
+
+    &:hover strong {
+        color: $bronze;
+    }
 }

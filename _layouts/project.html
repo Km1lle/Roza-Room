@@ -20,6 +20,7 @@ layout: default
     </div>
     <div class="column is-4">
         <div class="box">
+            {% include sceau.html project=page class="box-sceau" %}
             {% if page.status %}<p class="mb-2"><strong>État :</strong> {% include status.html status=page.status %}</p>{% endif %}
             {% if page.started %}<p class="mb-2"><strong>Démarré :</strong> {{ page.started }}</p>{% endif %}
             {% if page.repository %}<p class="mb-2"><strong>Code :</strong> <a href="{{ page.repository }}">dépôt</a></p>{% endif %}
@@ -42,7 +43,7 @@ layout: default
 {%- endfor -%}
 {% if _linked_docs.size > 0 %}
 <section class="mt-6">
-    <h2 class="title is-4">Documentation utilisée</h2>
+    <h2 class="title is-4">Ressources utilisées</h2>
     {% include cards.html items=_linked_docs %}
 </section>
 {% endif %}

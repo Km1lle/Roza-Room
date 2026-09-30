@@ -20,10 +20,10 @@ Le site est alors disponible sur <http://localhost:4000>.
 | Dossier | Contenu | URL |
 | --- | --- | --- |
 | `_projects/<slug>/` | Un dossier par projet : `index.md` + une page par section | `/projects/<slug>/` |
-| `_docs/tutorials/` | Tutoriels pas à pas | `/docs/tutorials/...` |
-| `_docs/how-to-guides/` | Guides pour une tâche précise | `/docs/how-to-guides/...` |
-| `_docs/concepts/` | Théorie, principes | `/docs/concepts/...` |
-| `_docs/references/` | Fiches composants, machines, logiciels | `/docs/references/...` |
+| `_docs/materiel/` | Ressources : machines, outils, composants | `/docs/materiel/...` |
+| `_docs/logiciels/` | Ressources : CAO, trancheurs… | `/docs/logiciels/...` |
+| `_docs/guides/` | Ressources : tutoriels, méthodes | `/docs/guides/...` |
+| `_docs/references-externes/` | Ressources : liens et docs trouvés ailleurs | `/docs/references-externes/...` |
 | `_posts/` | Journal de bord (`AAAA-MM-JJ-titre.md`) | `/journal/...` |
 | `_templates/` | Modèles vierges à copier (non publiés) | |
 
