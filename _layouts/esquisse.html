@@ -1,0 +1,30 @@
+---
+layout: default
+---
+<nav class="breadcrumb" aria-label="Fil d'Ariane">
+    <ul>
+        <li><a href="{{ '/esquisses/' | relative_url }}">Esquisses</a></li>
+        <li class="is-active"><a aria-current="page">{{ page.title }}</a></li>
+    </ul>
+</nav>
+
+<div class="post-projet">
+    {% include sceau.html seal="esquisse" title="Esquisse" class="sceau-esquisse" %}
+    <span>
+        Esquisse · commencée le {{ page.date | date: "%d/%m/%Y" }}
+        {%- if page.updated %}<br>Mise à jour le {{ page.updated | date: "%d/%m/%Y" }}{% endif %}
+    </span>
+</div>
+
+{% if page.description or page.tags.size > 0 %}
+<div class="box doc-meta">
+    {% if page.description %}<p class="mb-2">{{ page.description }}</p>{% endif %}
+    <div class="tags">
+        {% for tag in page.tags %}<span class="tag is-light">{{ tag }}</span>{% endfor %}
+    </div>
+</div>
+{% endif %}
+
+<div class="content">
+    {{ content }}
+</div>

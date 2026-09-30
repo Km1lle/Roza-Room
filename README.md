@@ -25,6 +25,7 @@ Le site est alors disponible sur <http://localhost:4000>.
 | `_docs/guides/` | Ressources : tutoriels, méthodes | `/docs/guides/...` |
 | `_docs/references-externes/` | Ressources : liens et docs trouvés ailleurs | `/docs/references-externes/...` |
 | `_posts/` | Journal de bord (`AAAA-MM-JJ-titre.md`) | `/journal/...` |
+| `esquisses/_posts/` | Esquisses : idées et petits projets sans fin prévue, aussi listées dans le journal | `/esquisses/...` |
 | `_templates/` | Modèles vierges à copier (non publiés) | |
 
 ## Ajouter du contenu
@@ -32,6 +33,7 @@ Le site est alors disponible sur <http://localhost:4000>.
 - **Nouveau projet** : créer `_projects/<slug>/index.md` à partir de `_templates/projet-index.md`.
 - **Nouvelle section de projet** : créer `_projects/<slug>/<section>.md` à partir de `_templates/projet-section.md`.
 - **Nouvelle page de doc** : créer le fichier dans le bon sous-dossier de `_docs/` à partir de `_templates/doc.md`.
+- **Nouvelle esquisse** : créer `esquisses/_posts/AAAA-MM-JJ-titre.md` à partir de `_templates/esquisse.md`.
 - **Nouvelle entrée de journal** : créer `_posts/AAAA-MM-JJ-titre.md` à partir de `_templates/journal.md`.
 
 Les listes (projets, sections, documentation, journal) se mettent à jour toutes seules.

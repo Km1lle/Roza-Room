@@ -505,7 +505,20 @@ $vert-clair: mix($vert, $creme, 35%);
     }
 }
 
+// Sceau commun des esquisses : bronze, contour intérieur en pointillés (« en cours »)
+.sceau-esquisse {
+    color: $bronze;
+
+    .sceau-trait {
+        stroke-dasharray: 2.5 2;
+    }
+}
+
 // Nom du projet au-dessus du titre d'une entrée du journal
+.card-projet.is-esquisse {
+    color: $bronze;
+}
+
 .card-projet {
     margin-bottom: 0.35rem;
     font-family: $titres;
@@ -542,6 +555,274 @@ $vert-clair: mix($vert, $creme, 35%);
     }
 
     &:hover strong {
+        color: $bronze;
+    }
+}
+
+// ─── Journal : choix de l'affichage ───────────────────────────────────────
+// Les classes Bulma (display: flex…) ne doivent pas l'emporter sur l'attribut hidden
+[hidden] {
+    display: none !important;
+}
+
+.journal-vues {
+    justify-content: flex-end;
+    margin-bottom: 1.5rem;
+
+    .button {
+        background-color: $carte;
+        border-color: rgba($or, 0.55);
+        color: $nuit;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+
+        &.is-active {
+            background-color: $nuit;
+            border-color: $nuit;
+            color: $or-clair;
+        }
+    }
+}
+
+// ─── Journal : ligne de temps ─────────────────────────────────────────────
+// Axe vertical, flèche en haut (le temps avance vers le haut), origine en bas.
+// Les entrées alternent à gauche et à droite ; couleur selon le type.
+$chrono-trait: 1.5rem; // longueur du trait entre l'axe et le texte
+
+.chrono {
+    position: relative;
+    max-width: 60rem;
+    margin: 0 auto;
+    padding-top: 2.5rem;
+
+    .is-projet { --chrono-couleur: #{$vert}; }
+    .is-esquisse { --chrono-couleur: #{$bronze}; }
+}
+
+.chrono-legende {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    gap: 1.25rem;
+    font-family: $titres;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+
+    span {
+        color: var(--chrono-couleur);
+
+        &::before {
+            content: "";
+            display: inline-block;
+            width: 0.6rem;
+            height: 0.6rem;
+            margin-right: 0.4rem;
+            border-radius: 50%;
+            background-color: var(--chrono-couleur);
+        }
+    }
+}
+
+// Axe : de la flèche jusqu'au point d'origine
+.chrono::before {
+    content: "";
+    position: absolute;
+    top: 2.6rem;
+    bottom: 2rem; // s'arrête au centre du point d'origine
+    left: calc(50% - 1px);
+    width: 2px;
+    background-color: $nuit;
+}
+
+.chrono-fleche {
+    position: relative;
+    display: block;
+    width: 1rem;
+    height: 1rem;
+    margin: 0 auto 2.5rem;
+    border-top: 2px solid $nuit;
+    border-left: 2px solid $nuit;
+    transform: translateY(0.2rem) rotate(45deg);
+}
+
+.chrono-liste {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.chrono-item {
+    position: relative;
+    width: 50%;
+    padding: 0.6rem 0;
+
+    a {
+        display: inline-block;
+        color: $nuit;
+    }
+
+    a:hover .chrono-titre {
+        color: var(--chrono-couleur);
+    }
+
+    strong {
+        color: var(--chrono-couleur);
+    }
+
+    // Trait horizontal entre l'axe et le texte, terminé par un point sur l'axe
+    &::before {
+        content: "";
+        position: absolute;
+        top: 1.45rem;
+        width: $chrono-trait;
+        height: 2px;
+        background-color: var(--chrono-couleur);
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        top: calc(1.45rem - 4px);
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: var(--chrono-couleur);
+        border: 2px solid $papier;
+    }
+
+    &.is-gauche {
+        margin-right: 50%;
+        padding-right: $chrono-trait + 0.75rem;
+        text-align: right;
+
+        &::before { right: 0; }
+        &::after { right: -5px; }
+    }
+
+    &.is-droite {
+        margin-left: 50%;
+        padding-left: $chrono-trait + 0.75rem;
+
+        &::before { left: 0; }
+        &::after { left: -5px; }
+    }
+}
+
+.chrono-date {
+    display: block;
+    font-family: $titres;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    color: $bronze;
+}
+
+// Point d'origine : cercle plein cerclé, « Début »
+.chrono-origine {
+    position: relative;
+    margin-top: 1.25rem;
+    padding-left: calc(50% + #{$chrono-trait} + 0.75rem);
+
+    .chrono-titre strong {
+        color: $nuit;
+    }
+}
+
+.chrono-point {
+    position: absolute;
+    top: 0.1rem;
+    left: calc(50% - 0.6rem);
+    z-index: 1;
+    width: 1.2rem;
+    height: 1.2rem;
+    border-radius: 50%;
+    background-color: $nuit;
+    box-shadow: 0 0 0 3px $papier, 0 0 0 5px $nuit;
+}
+
+// Mobile : axe à gauche, toutes les entrées à droite
+@media screen and (max-width: 768px) {
+    .chrono::before {
+        left: 0.9rem;
+    }
+
+    .chrono-fleche {
+        margin-left: 0.45rem;
+    }
+
+    .chrono-item.is-gauche,
+    .chrono-item.is-droite {
+        width: auto;
+        margin: 0 0 0 0.9rem;
+        padding: 0.6rem 0 0.6rem ($chrono-trait + 0.75rem);
+        text-align: left;
+
+        &::before { left: 0; right: auto; }
+        &::after { left: -5px; right: auto; }
+    }
+
+    .chrono-origine {
+        padding-left: 3.2rem;
+    }
+
+    .chrono-point {
+        left: 0.3rem;
+    }
+}
+
+// ─── Barre de tri et de filtres (_includes/grille-filtrable.html) ─────────
+.filtres {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 1.75rem;
+    padding: 1rem 1.25rem;
+    background-color: $carte;
+    border: 1px solid rgba($or, 0.55);
+}
+
+.filtre-groupe {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.filtre-label {
+    min-width: 4.5rem;
+    margin-right: 0.35rem;
+    font-family: $titres;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: $bronze;
+}
+
+.filtre-btn {
+    padding: 0.2rem 0.7rem;
+    font-family: $titres;
+    font-size: 0.8rem;
+    color: $nuit;
+    background-color: transparent;
+    border: 1px solid rgba($or, 0.7);
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease;
+
+    &:hover {
+        background-color: rgba($or, 0.15);
+    }
+
+    &.is-active {
+        background-color: $nuit;
+        border-color: $nuit;
+        color: $or-clair;
+    }
+
+    &.is-esquisse:not(.is-active) {
         color: $bronze;
     }
 }

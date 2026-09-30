@@ -16,12 +16,9 @@ footer_menu: footer_navigation
 hide_share_buttons: true
 
 # Journal de bord
-paginate: 10
-paginate_path: "/journal/page:num/"
 excerpt_separator: "<!--more-->"
 
 plugins:
-  - jekyll-paginate
   - jekyll-feed
   - jekyll-sitemap
   - jekyll-seo-tag
@@ -64,6 +61,16 @@ defaults:
       layout: post
       hero_height: is-small
       permalink: /journal/:year/:month/:day/:title/
+  # Esquisses : articles de esquisses/_posts/ (catégorie « esquisses »), aussi listés dans le journal
+  - scope:
+      path: "esquisses"
+      type: posts
+    values:
+      layout: esquisse
+      hero_height: is-small
+      menubar_toc: true
+      toc_title: Sommaire
+      permalink: /esquisses/:title/
 
 sass:
   silence_deprecations:

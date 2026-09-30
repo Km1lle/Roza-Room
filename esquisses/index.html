@@ -1,0 +1,14 @@
+---
+layout: default
+title: Esquisses
+subtitle: Idées, essais et petits projets, sans ligne d'arrivée
+hero_height: is-small
+permalink: /esquisses/
+---
+
+{%- comment -%}
+  Une esquisse = un fichier esquisses/_posts/AAAA-MM-JJ-titre.md (modèle : _templates/esquisse.md).
+  Elle apparaît ici et dans le journal de bord.
+{%- endcomment -%}
+{%- assign esquisses = site.categories.esquisses -%}
+{% include grille-filtrable.html items=esquisses empty="Aucune esquisse pour l'instant." %}

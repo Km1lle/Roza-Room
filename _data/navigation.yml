@@ -1,8 +1,10 @@
 - name: Projets
   link: /projects/
-- name: Ressources
-  link: /docs/
+- name: Esquisses
+  link: /esquisses/
 - name: Journal
   link: /journal/
+- name: Ressources
+  link: /docs/
 - name: À propos
   link: /about/

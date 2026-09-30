@@ -1,0 +1,35 @@
+{%- comment -%}
+  Ligne de temps du journal : axe vertical, du plus ancien (en bas, « Début »)
+  au plus récent (en haut, sous la flèche). Les entrées alternent à gauche et à droite,
+  la plus ancienne à gauche. Couleur selon le type : projet (vert) ou esquisse (bronze).
+{%- endcomment -%}
+<div class="chrono">
+    <p class="chrono-legende">
+        <span class="is-projet">Projet</span>
+        <span class="is-esquisse">Esquisse</span>
+    </p>
+    <span class="chrono-fleche" aria-hidden="true"></span>
+    <ol class="chrono-liste" reversed>
+        {%- for post in site.posts -%}
+            {%- if post.categories contains "esquisses" -%}
+                {%- assign _type = "esquisse" -%}
+                {%- assign _label = "Esquisse" -%}
+            {%- else -%}
+                {%- include project-by-slug.html slug=post.project -%}
+                {%- assign _type = "projet" -%}
+                {%- assign _label = _found_project.title | default: "Journal" -%}
+            {%- endif -%}
+            {%- assign _cote = forloop.rindex | modulo: 2 -%}
+        <li class="chrono-item is-{{ _type }} {% if _cote == 1 %}is-gauche{% else %}is-droite{% endif %}">
+            <a href="{{ post.url | relative_url }}">
+                <span class="chrono-date">{{ post.date | date: "%d/%m/%Y" }}</span>
+                <span class="chrono-titre"><strong>{{ _label }}</strong> : {{ post.title }}</span>
+            </a>
+        </li>
+        {%- endfor -%}
+    </ol>
+    <div class="chrono-origine">
+        <span class="chrono-point" aria-hidden="true"></span>
+        <span class="chrono-titre"><strong>Début</strong></span>
+    </div>
+</div>

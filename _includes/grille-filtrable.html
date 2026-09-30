@@ -1,0 +1,81 @@
+{%- comment -%}
+  Grille de cartes avec barre de tri et de filtres (tri et filtres dans le navigateur).
+
+  {% include grille-filtrable.html items=projets statut=true empty="Aucun projet." %}
+  {% include grille-filtrable.html items=site.posts projet=true %}
+
+  Toujours : tri chronologique et filtre par thème (tags présents dans les items).
+  statut=true : filtre par état (projets). projet=true : filtre par projet (journal).
+  Sans JavaScript, la barre reste masquée et la grille s'affiche telle quelle.
+{%- endcomment -%}
+
+{%- comment -%} Thèmes : tous les tags des items, sans doublon {%- endcomment -%}
+{%- assign _f_tags = "" | split: "" -%}
+{%- for _it in include.items -%}
+    {%- if _it.tags -%}{%- assign _f_tags = _f_tags | concat: _it.tags -%}{%- endif -%}
+{%- endfor -%}
+{%- assign _f_tags = _f_tags | uniq | sort -%}
+
+{%- comment -%} États présents, dans l'ordre logique {%- endcomment -%}
+{%- assign _f_statuts_presents = include.items | map: "status" | compact | uniq -%}
+{%- assign _f_statuts = "" | split: "" -%}
+{%- assign _f_ordre = "idée,en cours,en pause,terminé" | split: "," -%}
+{%- for _s in _f_ordre -%}
+    {%- if _f_statuts_presents contains _s -%}{%- assign _f_statuts = _f_statuts | push: _s -%}{%- endif -%}
+{%- endfor -%}
+
+{%- comment -%} Projets présents (journal) : slugs des entrées, plus « esquisses » {%- endcomment -%}
+{%- assign _f_projets = include.items | map: "project" | compact | uniq -%}
+{%- assign _f_esquisses = false -%}
+{%- for _it in include.items -%}
+    {%- if _it.categories contains "esquisses" -%}{%- assign _f_esquisses = true -%}{%- endif -%}
+{%- endfor -%}
+
+<div class="filtrable" data-filtrable>
+    <div class="filtres" hidden>
+        <div class="filtre-groupe">
+            <span class="filtre-label">Trier</span>
+            <button type="button" class="filtre-btn is-active" data-filtre="tri" data-valeur="desc" aria-pressed="true">Plus récents</button>
+            <button type="button" class="filtre-btn" data-filtre="tri" data-valeur="asc" aria-pressed="false">Plus anciens</button>
+        </div>
+
+        {%- if include.statut and _f_statuts.size > 0 %}
+        <div class="filtre-groupe">
+            <span class="filtre-label">État</span>
+            <button type="button" class="filtre-btn is-active" data-filtre="statut" data-valeur="" aria-pressed="true">Tous</button>
+            {%- for _s in _f_statuts %}
+            <button type="button" class="filtre-btn" data-filtre="statut" data-valeur="{{ _s }}" aria-pressed="false">{{ _s }}</button>
+            {%- endfor %}
+        </div>
+        {%- endif %}
+
+        {%- if include.projet %}
+        <div class="filtre-groupe">
+            <span class="filtre-label">Projet</span>
+            <button type="button" class="filtre-btn is-active" data-filtre="projet" data-valeur="" aria-pressed="true">Tous</button>
+            {%- for _slug in _f_projets %}
+                {%- include project-by-slug.html slug=_slug -%}
+            <button type="button" class="filtre-btn" data-filtre="projet" data-valeur="{{ _slug }}" aria-pressed="false">{{ _found_project.title | default: _slug }}</button>
+            {%- endfor %}
+            {%- if _f_esquisses %}
+            <button type="button" class="filtre-btn is-esquisse" data-filtre="projet" data-valeur="esquisses" aria-pressed="false">Esquisses</button>
+            {%- endif %}
+        </div>
+        {%- endif %}
+
+        {%- if _f_tags.size > 0 %}
+        <div class="filtre-groupe">
+            <span class="filtre-label">Thème</span>
+            <button type="button" class="filtre-btn is-active" data-filtre="tag" data-valeur="" aria-pressed="true">Tous</button>
+            {%- for _t in _f_tags %}
+            <button type="button" class="filtre-btn" data-filtre="tag" data-valeur="{{ _t }}" aria-pressed="false">{{ _t }}</button>
+            {%- endfor %}
+        </div>
+        {%- endif %}
+    </div>
+
+    {% include cards.html items=include.items empty=include.empty %}
+
+    <p class="filtres-vide has-text-grey" hidden>Aucun résultat avec ces filtres.</p>
+</div>
+<script src="{{ '/assets/js/filtres.js' | relative_url }}" defer></script>

@@ -7,4 +7,4 @@ permalink: /projects/
 ---
 
 {%- assign projects = site.projects | where: "layout", "project" | sort: "started" | reverse -%}
-{% include cards.html items=projects empty="Aucun projet pour l'instant." %}
+{% include grille-filtrable.html items=projects statut=true empty="Aucun projet pour l'instant." %}

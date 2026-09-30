@@ -6,20 +6,33 @@
 
   Chaque carte affiche : image (si `image`), titre, `description`, `status`, tags et date (articles du journal).
   Les projets et les entrées du journal portent le sceau de leur projet ; les entrées affichent aussi son nom.
+  Les esquisses (catégorie « esquisses ») portent le sceau commun des esquisses.
 {%- endcomment -%}
 {%- if include.items.size > 0 -%}
 <div class="columns is-multiline">
     {%- for item in include.items -%}
     {%- assign _card_project = nil -%}
-    {%- if item.collection == "posts" -%}
+    {%- assign _card_esquisse = false -%}
+    {%- if item.categories contains "esquisses" -%}
+        {%- assign _card_esquisse = true -%}
+    {%- elsif item.collection == "posts" -%}
         {%- include project-by-slug.html slug=item.project -%}
         {%- assign _card_project = _found_project -%}
     {%- elsif item.layout == "project" -%}
         {%- assign _card_project = item -%}
     {%- endif -%}
-    <div class="column is-4-desktop is-6-tablet">
+    {%- comment -%} Attributs data-* : lus par assets/js/filtres.js pour trier et filtrer {%- endcomment -%}
+    <div class="column is-4-desktop is-6-tablet"
+         data-date="{% if item.collection == 'posts' %}{{ item.date | date: '%s' }}{% elsif item.started %}{{ item.started | append: '-01' | date: '%s' }}{% endif %}"
+         data-statut="{{ item.status }}"
+         data-projet="{% if _card_esquisse %}esquisses{% else %}{{ item.project }}{% endif %}"
+         data-tags="{{ item.tags | join: '|' }}">
         <a class="card doc-card" href="{{ item.url | relative_url }}">
-            {%- if _card_project -%}{% include sceau.html project=_card_project class="card-sceau" %}{%- endif -%}
+            {%- if _card_esquisse -%}
+                {% include sceau.html seal="esquisse" title="Esquisse" class="card-sceau sceau-esquisse" %}
+            {%- elsif _card_project -%}
+                {% include sceau.html project=_card_project class="card-sceau" %}
+            {%- endif -%}
             {%- if item.image -%}
             <div class="card-image">
                 <figure class="image is-16by9">
@@ -28,7 +41,9 @@
             </div>
             {%- endif -%}
             <div class="card-content">
-                {%- if item.collection == "posts" and _card_project -%}
+                {%- if _card_esquisse -%}
+                <p class="card-projet is-esquisse">Esquisse</p>
+                {%- elsif item.collection == "posts" and _card_project -%}
                 <p class="card-projet">{{ _card_project.title }}</p>
                 {%- endif -%}
                 <p class="title is-5">{{ item.title }}</p>
@@ -40,7 +55,7 @@
                     {%- for tag in item.tags -%}<span class="tag is-light">{{ tag }}</span>{%- endfor -%}
                 </div>
                 {%- if item.collection == "posts" -%}
-                <p class="is-size-7 has-text-grey">{{ item.date | date: "%d/%m/%Y" }}</p>
+                <p class="is-size-7 has-text-grey">{{ item.date | date: "%d/%m/%Y" }}{% if item.updated %} · mise à jour le {{ item.updated | date: "%d/%m/%Y" }}{% endif %}</p>
                 {%- endif -%}
             </div>
         </a>

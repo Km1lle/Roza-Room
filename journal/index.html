@@ -5,6 +5,53 @@ subtitle: Les avancées de tous mes projets, de la plus récente à la plus anci
 hero_height: is-small
 ---
 
-{% include cards.html items=paginator.posts empty="Aucune entrée pour l'instant." %}
+{%- comment -%}
+  Deux affichages de toutes les entrées : tuiles (triables et filtrables) et ligne de temps.
+  Le choix est mémorisé dans le navigateur ; sans JavaScript, seules les tuiles s'affichent.
+  Lien direct vers la ligne de temps : /journal/#ligne-de-temps
+{%- endcomment -%}
+<div class="journal-vues buttons has-addons" role="group" aria-label="Affichage du journal" hidden>
+    <button type="button" class="button" data-vue="tuiles" aria-pressed="true">
+        <span class="icon"><i class="fas fa-th-large"></i></span><span>Tuiles</span>
+    </button>
+    <button type="button" class="button" data-vue="chrono" aria-pressed="false">
+        <span class="icon"><i class="fas fa-stream"></i></span><span>Ligne de temps</span>
+    </button>
+</div>
 
-{% include pagination.html %}
+<div id="vue-tuiles">
+{% include grille-filtrable.html items=site.posts projet=true empty="Aucune entrée pour l'instant." %}
+</div>
+
+<div id="vue-chrono" hidden>
+{% include chrono.html %}
+</div>
+
+<script>
+    (function () {
+        var boutons = document.querySelectorAll(".journal-vues [data-vue]");
+        var vues = { tuiles: document.getElementById("vue-tuiles"), chrono: document.getElementById("vue-chrono") };
+
+        function afficher(vue) {
+            if (!vues[vue]) vue = "tuiles";
+            Object.keys(vues).forEach(function (nom) { vues[nom].hidden = nom !== vue; });
+            boutons.forEach(function (b) {
+                var actif = b.dataset.vue === vue;
+                b.classList.toggle("is-active", actif);
+                b.setAttribute("aria-pressed", actif);
+            });
+            try { localStorage.setItem("journal-vue", vue); } catch (e) {}
+        }
+
+        boutons.forEach(function (b) {
+            b.addEventListener("click", function () { afficher(b.dataset.vue); });
+        });
+        document.querySelector(".journal-vues").hidden = false;
+
+        // Lien direct : /journal/#ligne-de-temps ouvre la ligne de temps
+        var choix = "tuiles";
+        try { choix = localStorage.getItem("journal-vue") || "tuiles"; } catch (e) {}
+        if (location.hash === "#ligne-de-temps") choix = "chrono";
+        afficher(choix);
+    })();
+</script>

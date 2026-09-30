@@ -1,23 +1,27 @@
 {%- comment -%}
-  Sceau d'un projet : ovale presque rond à double contour et pictogramme au trait.
+  Sceau : ovale presque rond à double contour et pictogramme au trait.
 
-  {% include sceau.html project=page %}              (page d'accueil d'un projet)
+  {% include sceau.html project=page %}                         (sceau d'un projet)
   {% include sceau.html project=_projet class="card-sceau" %}
+  {% include sceau.html seal="esquisse" title="Esquisse" class="sceau-esquisse" %}
 
-  Le pictogramme vient du champ `seal:` du projet (fichier _includes/sceaux/<seal>.html,
-  dessiné dans un repère 40 × 40). Sans `seal:`, l'initiale du projet est affichée.
+  Le pictogramme vient de `seal` (paramètre, ou champ `seal:` du projet) : fichier
+  _includes/sceaux/<seal>.html, dessiné dans un repère 40 × 40. Sans pictogramme,
+  l'initiale du titre est affichée.
 {%- endcomment -%}
-{%- if include.project -%}
-<span class="sceau {{ include.class }}" title="Projet : {{ include.project.title | escape }}">
+{%- assign _s_title = include.title | default: include.project.title -%}
+{%- assign _s_seal = include.seal | default: include.project.seal -%}
+{%- if _s_title -%}
+<span class="sceau {{ include.class }}" title="{% if include.project %}Projet : {% endif %}{{ _s_title | escape }}">
     <svg viewBox="0 0 52 56" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
         <ellipse class="sceau-fond" cx="26" cy="28" rx="24.5" ry="26.5" stroke-width="2.5"/>
-        <ellipse cx="26" cy="28" rx="20.6" ry="22.6" stroke-width="1"/>
-        {%- if include.project.seal -%}
+        <ellipse class="sceau-trait" cx="26" cy="28" rx="20.6" ry="22.6" stroke-width="1"/>
+        {%- if _s_seal -%}
         <g transform="translate(9 11) scale(0.85)" stroke-width="2.4">
-            {% include sceaux/{{ include.project.seal }}.html %}
+            {% include sceaux/{{ _s_seal }}.html %}
         </g>
         {%- else -%}
-        <text x="26" y="35" text-anchor="middle" font-size="20" font-family="Josefin Sans, sans-serif" font-weight="700" fill="currentColor" stroke="none">{{ include.project.title | slice: 0 }}</text>
+        <text x="26" y="35" text-anchor="middle" font-size="20" font-family="Josefin Sans, sans-serif" font-weight="700" fill="currentColor" stroke="none">{{ _s_title | slice: 0 }}</text>
         {%- endif -%}
     </svg>
 </span>
